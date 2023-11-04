@@ -11,7 +11,7 @@ const Footer = () => {
                     <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
                         <Link href={'/'} className="flex justify-center flex-col">
                             <div className='flex justify-center items-center'>
-                                <img src="logo.png" alt="" height={50} width={50} />
+                                <img src="/logo.png" alt="" height={50} width={50} />
                                 <div className='flex flex-col items-start'>
                                     <span className="ml-3 text-2xl font-black text-rose-900 leading-6">CodesWear.com</span>
                                     <span className="ml-3 text-sm font-medium text-rose-800 leading-6">A Shop for coders</span>
