@@ -19,7 +19,8 @@ const Footer = () => {
                             </div>
                         </Link>
                     </div>
-                    <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
+                    <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10">
+                        
                         <div className="lg:w-1/4 md:w-1/2 w-full px-4">
                             <h2 className="title-font font-bold border-b-2 border-rose-900 text-rose-900 tracking-widest text-sm mb-3">CATEGORIES</h2>
                             <nav className="list mb-10">

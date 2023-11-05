@@ -1,14 +1,13 @@
 import Link from 'next/link'
-import React, { useEffect, useState } from 'react'
-import { BsAsterisk, BsCart4, BsCurrencyRupee, BsFillCartCheckFill, BsFillCartXFill } from 'react-icons/Bs';
-import { AiFillCloseCircle, AiFillMinusCircle, AiFillPlusCircle } from 'react-icons/ai'
+import React, { useState } from 'react'
+import { BsCart4, BsCurrencyRupee, BsFillBagCheckFill, BsFillCartXFill } from 'react-icons/Bs';
+import { AiFillCloseCircle, AiFillMinusSquare, AiFillPlusSquare } from 'react-icons/ai'
 import { useRouter } from 'next/router';
 
-const Navbar = () => {
+const Navbar = ({ cart, clearCart, resizeCart }) => {
 
     const path = useRouter().pathname
     const [cartFlag, setCartFlag] = useState(false)
-    const [cart, setCart] = useState(1)
 
     return (
         <>
@@ -30,80 +29,58 @@ const Navbar = () => {
                         <BsCart4 className='text-2xl text-rose-500' />
                     </button>
 
-                    <div id="sidebar" className={`absolute bg-rose-100 h-[100vh] w-[20rem] right-0 top-0 transition-all ${cartFlag ? 'right-0' : 'right-[-20rem]'}`}>
+                    <div id="sidebar" className={`absolute bg-rose-100 h-[100vh] w-[20rem] right-0 top-0 transition-all shadow-xl ${cartFlag ? 'right-0' : 'right-[-20rem]'}`}>
                         <div className='flex flex-col justify-between h-full'>
-                            <div>
+                            <div className='h-full'>
                                 <div className='flex justify-between items-center px-3 py-4 border-b-2 border-rose-400'>
                                     <span className='text-2xl text-rose-500 font-bold'>Your Cart</span>
                                     <AiFillCloseCircle className='text-2xl text-rose-500 cursor-pointer mt-1' onClick={() => { setCartFlag(!cartFlag) }} />
                                 </div>
 
-                                {cart > 0 ?
+                                {Object.keys(cart).length !== 0 ?
                                     <div className='select-none'>
-                                        <div className='flex py-2 px-2 border-b border-rose-300'>
-                                            <span className="text-rose-400 font-medium w-[10rem]">Avenger Tshirt</span>
-                                            <span className="text-rose-400 font-medium w-[5rem] text-center flex gap-2 items-center justify-center">
-                                                <AiFillPlusCircle className='text-xl hover:text-rose-500 transition-all cursor-pointer' />
-                                                2
-                                                <AiFillMinusCircle className='text-xl hover:text-rose-500 transition-all cursor-pointer' />
-                                            </span>
-                                            <span className="text-rose-400 font-medium w-[5rem] ms-auto flex items-center justify-end">
-                                                <BsCurrencyRupee />
-                                                998
-                                            </span>
-                                        </div>
-                                        <div className='flex py-2 px-2 border-b border-rose-300'>
-                                            <span className="text-rose-400 font-medium w-[10rem]">Avenger Hoodies</span>
-                                            <span className="text-rose-400 font-medium w-[5rem] text-center flex gap-2 items-center justify-center">
-                                                <AiFillPlusCircle className='text-xl hover:text-rose-500 transition-all cursor-pointer' />
-                                                2
-                                                <AiFillMinusCircle className='text-xl hover:text-rose-500 transition-all cursor-pointer' />
-                                            </span>
-                                            <span className="text-rose-400 font-medium w-[5rem] ms-auto flex items-center justify-end">
-                                                <BsCurrencyRupee />
-                                                998
-                                            </span>
-                                        </div>
-                                        <div className='flex py-2 px-2 border-b border-rose-300'>
-                                            <span className="text-rose-400 font-medium w-[10rem]">Avenger Watch</span>
-                                            <span className="text-rose-400 font-medium w-[5rem] text-center flex gap-2 items-center justify-center">
-                                                <AiFillPlusCircle className='text-xl hover:text-rose-500 transition-all cursor-pointer' />
-                                                2
-                                                <AiFillMinusCircle className='text-xl hover:text-rose-500 transition-all cursor-pointer' />
-                                            </span>
-                                            <span className="text-rose-400 font-medium w-[5rem] ms-auto flex items-center justify-end">
-                                                <BsCurrencyRupee />
-                                                998
-                                            </span>
-                                        </div>
+                                        {cart && Object.keys(cart).map((ele) => {
+                                            return (
+                                                <div key={ele} className='flex py-2 px-2 border-b border-rose-300'>
+                                                    <span className="text-rose-400 font-medium w-[10rem]">Avenger Tshirt</span>
+                                                    <span className="text-rose-400 font-medium w-[5rem] text-center flex gap-2 items-center justify-center">
+                                                        <AiFillMinusSquare onClick={() => { resizeCart(ele, 1) }} className='text-xl hover:text-rose-500 transition-all cursor-pointer' />
+                                                        {cart[ele].qty}
+                                                        <AiFillPlusSquare onClick={() => { resizeCart(ele, -1) }} className='text-xl hover:text-rose-500 transition-all cursor-pointer' />
+                                                    </span>
+                                                    <span className="text-rose-400 font-medium w-[5rem] ms-auto flex items-center justify-end">
+                                                        <BsCurrencyRupee />
+                                                        {cart[ele].price}
+                                                    </span>
+                                                </div>
+                                            )
+                                        })}
 
                                     </div>
                                     :
-                                    <div>
-
+                                    <div className='w-full h-full flex justify-center items-center flex-col'>
+                                        <BsCart4 className='text-9xl text-rose-200' />
+                                        <span className='text-xl font-bold text-rose-500 mt-5 mb-[25%]'>Your cart is empty!</span>
                                     </div>
                                 }
                             </div>
 
-                            {cart > 0 &&
+                            {Object.keys(cart).length > 0 &&
                                 <div className='border-t-2 border-rose-300 mb-2'>
                                     <div className='flex py-2 px-2 justify-center gap-5'>
-                                        <button type="button" className='uppercase text-white font-semibold bg-rose-500 py-2 px-3 rounded flex items-center gap-2 hover:text-rose-500 hover:bg-white hover:border-rose-500 border-2 transition-all'>
+                                        <button type="button" onClick={clearCart} className='border-rose-500 uppercase text-white font-semibold bg-rose-500 py-2 px-3 rounded flex items-center gap-2 hover:text-rose-500 hover:bg-white hover:border-rose-500 border-2 transition-all'>
                                             <BsFillCartXFill />
                                             Empty cart
                                         </button>
 
-                                        <Link href={'/checkout'} className='uppercase text-white font-semibold bg-rose-500 py-2 px-3 rounded flex items-center gap-2 hover:text-rose-500 hover:bg-white hover:border-rose-500 border-2 transition-all' onClick={() => {setCartFlag(!cartFlag)}}>
-                                            <BsFillCartCheckFill />
+                                        <Link href={'/checkout'} className='border-rose-500 uppercase text-white font-semibold bg-rose-500 py-2 px-3 rounded flex items-center gap-2 hover:text-rose-500 hover:bg-white hover:border-rose-500 border-2 transition-all' onClick={() => { setCartFlag(!cartFlag) }}>
+                                            <BsFillBagCheckFill />
                                             Checkout
                                         </Link>
                                     </div>
                                 </div>
                             }
                         </div>
-
-
-
                     </div>
 
                 </div>

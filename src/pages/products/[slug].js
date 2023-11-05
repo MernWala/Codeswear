@@ -1,8 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 
-export default function Page() {
+export default function Page({ addToCart }) {
     const [pinCode, setPinCode] = useState()
     const [pinStatus, setPinStatus] = useState()
+
+    const router = useRouter()
+    const slug = router.query.slug
 
     const handleCheckPin = async () => {
         await fetch(`http://localhost:3000/api/pincode`).then(async (e) => {
@@ -16,16 +20,12 @@ export default function Page() {
         })
     }
 
-    useEffect(() => {
-        console.log(pinStatus);
-    }, [pinStatus])
-
     return (
         <>
             <section className="text-gray-600 body-font overflow-hidden">
                 <div className="container px-5 py-10 mx-auto">
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
-                        <img alt="ecommerce" className="px-10 lg:w-1/2 w-full lg:h-auto object-cover object-top rounded" src="https://m.media-amazon.com/images/I/51zgJauZmeL._SX679_.jpg" />
+                        <img alt="ecommerce" className="px-10 lg:w-1/2 w-full lg:h-auto object-contain object-top rounded" src="https://m.media-amazon.com/images/I/51zgJauZmeL._SX679_.jpg" />
                         <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
 
                             <div className="flex items-center">
@@ -34,7 +34,7 @@ export default function Page() {
                                     <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">Avenger TShirt (XL/Black)</h1>
                                 </div>
                                 <div className="w-[20%]">
-                                    <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
+                                    <button type="button" className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                                         <svg fill="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="w-5 h-5" viewBox="0 0 24 24">
                                             <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"></path>
                                         </svg>
@@ -66,9 +66,9 @@ export default function Page() {
                             <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
                                 <div className="flex">
                                     <span className="mr-3">Color</span>
-                                    <button className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
-                                    <button className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
-                                    <button className="border-2 border-gray-300 ml-1 bg-rose-500 rounded-full w-6 h-6 focus:outline-none"></button>
+                                    <button type="button" className="border-2 border-gray-300 rounded-full w-6 h-6 focus:outline-none"></button>
+                                    <button type="button" className="border-2 border-gray-300 ml-1 bg-gray-700 rounded-full w-6 h-6 focus:outline-none"></button>
+                                    <button type="button" className="border-2 border-gray-300 ml-1 bg-rose-500 rounded-full w-6 h-6 focus:outline-none"></button>
                                 </div>
                                 <div className="flex ml-6 items-center">
                                     <span className="mr-3">Size</span>
@@ -91,13 +91,13 @@ export default function Page() {
                                 <span className="title-font font-medium text-2xl text-gray-900">₹499.00</span>
 
                                 <div className="flex gap-2 ml-10">
-                                    <button className="flex text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded">Buy Now</button>
-                                    <button className="flex text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded">Add To Cart</button>
+                                    <button type="button" className="flex text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded">Buy Now</button>
+                                    <button type="button" onClick={() => { addToCart(slug, 1, 499, 'Avenger Hoodies', 'XL', 'Black') }} className="flex text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded">Add To Cart</button>
                                 </div>
                             </div>
                             <div className="flex mt-5 gap-2">
                                 <input type="number" name="pin" onChange={(e) => { setPinCode(e.target.value) }} id="" placeholder='Check Availability' className='w-[16rem] border border-rose-200 px-2 rounded focus:outline-none no-spinner' />
-                                <button className="flex text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded" onClick={handleCheckPin}>Buy Now</button>
+                                <button type="button" className="flex text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded" onClick={handleCheckPin}>Buy Now</button>
                             </div>
                             <div className="flex mt-2 gap-2">
                                 {pinStatus && pinStatus === true &&
