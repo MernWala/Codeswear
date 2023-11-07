@@ -9,7 +9,7 @@ export default function Page({ addToCart }) {
     const slug = router.query.slug
 
     const handleCheckPin = async () => {
-        await fetch(`http://localhost:3000/api/pincode`).then(async (e) => {
+        await fetch(`/api/pincode`).then(async (e) => {
             let res = await e.json()
 
             if (res.includes(Number(pinCode))) {
@@ -87,25 +87,26 @@ export default function Page({ addToCart }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex">
+                            <div>
                                 <span className="title-font font-medium text-2xl text-gray-900">₹499.00</span>
-
-                                <div className="flex gap-2 ml-10">
-                                    <button type="button" className="flex text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded">Buy Now</button>
-                                    <button type="button" onClick={() => { addToCart(slug, 1, 499, 'Avenger Hoodies', 'XL', 'Black') }} className="flex text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded">Add To Cart</button>
-                                </div>
                             </div>
-                            <div className="flex mt-5 gap-2">
-                                <input type="number" name="pin" onChange={(e) => { setPinCode(e.target.value) }} id="" placeholder='Check Availability' className='w-[16rem] border border-rose-200 px-2 rounded focus:outline-none no-spinner' />
-                                <button type="button" className="flex text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded" onClick={handleCheckPin}>Buy Now</button>
+                            <div className="flex mt-5 gap-2 2xl:flex-row md:flex-row sm:flex-col flex-col">
+                                <input type="number" name="pin" onChange={(e) => { setPinCode(e.target.value) }} id="" placeholder='Check Availability' className='w-[16rem] border border-rose-200 p-2 rounded focus:outline-none no-spinner' />
+                                <button type="button" className="flex text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded w-fit" onClick={handleCheckPin}>Check</button>
                             </div>
-                            <div className="flex mt-2 gap-2">
+                            <div className="flex mt-2 gap-2 mb-5">
                                 {pinStatus && pinStatus === true &&
                                     <span className="text-green-500">Yay! service available</span>
                                 }
                                 {!pinStatus && pinStatus === false &&
                                     <span className="text-red-500">Sorry! Service not available</span>
                                 }
+                            </div>
+                            <div className="flex 2xl:flex-row md:flex-row sm:flex-col flex-col gap-5">
+                                <div className="flex gap-2">
+                                    <button type="button" className="flex text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded">Buy Now</button>
+                                    <button type="button" onClick={() => { addToCart(slug, 1, 499, 'Avenger Hoodies', 'XL', 'Black') }} className="flex text-white bg-rose-500 border-0 py-2 px-6 focus:outline-none hover:bg-rose-600 rounded">Add To Cart</button>
+                                </div>
                             </div>
                         </div>
                     </div>
