@@ -18,10 +18,10 @@ const Navbar = ({ cart, clearCart, resizeCart }) => {
 
     return (
         <>
-            <header className="text-gray-600 body-font shadow-md sticky top-0 z-1 bg-white">
+            <header className="text-gray-600 body-font shadow-md sticky top-0 z-10 bg-white">
                 <div className="mx-auto flex flex-wrap p-5 flex-row items-center 2xl:px-10 md:px-10 sm:px-3 px-3 justify-between">
+                    <RxHamburgerMenu className='text-3xl text-rose-800 me-3 2xl:hidden md:hidden sm:block block cursor-pointer' onClick={() => { setMenu(!menu) }} />
                     <Link href={'/'} className="flex title-font font-medium items-center text-gray-900">
-                        <RxHamburgerMenu className='text-3xl text-rose-800 me-3 2xl:hidden md:hidden sm:block block' onClick={() => { setMenu(!menu) }} />
                         <div className='flex items-center'>
                             <img src="/logo.png" alt="" height={40} width={40} />
                             <span className="ml-3 text-xl font-black text-rose-800 hover:text-rose-900">CODESWEAR</span>
@@ -29,7 +29,7 @@ const Navbar = ({ cart, clearCart, resizeCart }) => {
                     </Link>
 
                     <nav className="2xl:flex md:flex sm:hidden hidden ml-auto mr-auto flex-wrap items-center text-base justify-center main-nav-custom">
-                        <Link href={'/tshirt'} className={`mr-5 uppercase font-medium hover:text-gray-900 ${path === '/tshirt' ? 'active' : ''}`}>T-Shirt</Link>
+                        <Link href={'/tshirt'} className={`mr-5 uppercase font-medium hover:text-gray-900 ${path === '/tshirt' ? 'active' : ''}`} onClick={() => { setMenu(!menu) }}>T-Shirt</Link>
                         <Link href={'/hoodies'} className={`mr-5 uppercase font-medium hover:text-gray-900 ${path === '/hoodies' ? 'active' : ''}`}>Hoodies</Link>
                         <Link href={'/watch'} className={`mr-5 uppercase font-medium hover:text-gray-900 ${path === '/watch' ? 'active' : ''}`}>watch</Link>
                         <Link href={'/mugs'} className={`mr-5 uppercase font-medium hover:text-gray-900 ${path === '/mugs' ? 'active' : ''}`}>Mug</Link>
@@ -101,12 +101,14 @@ const Navbar = ({ cart, clearCart, resizeCart }) => {
                     </div>
 
                     {/* sidebar for menu */}
-                    <div id="sidebar" className={`absolute bg-rose-100 h-[100vh] w-[20rem] right-0 top-0 transition-all shadow-xl ${menu ? 'left-0' : 'left-[-20rem]'}`}>
+                    <div id="sidebar" className={`absolute bg-rose-100 h-[100vh] w-[20rem] right-0 top-0 transition-all shadow-xl ${menu ? 'left-0' : 'left-[-20rem]'}`} onClick={() => {setMenu(!menu)}} >
                         <div className="flex items-center justify-between border-b-2 border-rose-500 p-3 mb-3">
-                            <div className='flex items-center'>
-                                <img src="/logo.png" alt="" height={40} width={40} />
-                                <span className="ml-3 text-xl font-black text-rose-800 hover:text-rose-900">CODESWEAR</span>
-                            </div>
+                            <Link href={'/'}>
+                                <div className='flex items-center'>
+                                    <img src="/logo.png" alt="" height={40} width={40} />
+                                    <span className="ml-3 text-xl font-black text-rose-800 hover:text-rose-900">CODESWEAR</span>
+                                </div>
+                            </Link>
                             <AiFillLeftCircle className='text-rose-500 text-3xl cursor-pointer' onClick={() => { setMenu(!menu) }} />
                         </div>
 
@@ -131,7 +133,7 @@ const Navbar = ({ cart, clearCart, resizeCart }) => {
 
                         <ul className='p-4 flex flex-col gap-4 border-t border-rose-500'>
                             <li className='flex items-center gap-2 transition-all hover:ms-3 text-rose-500'>
-                                <button type='button' className={`flex gap-2 items-center mr-5 uppercase font-medium`} onClick={() => { setMenu(false); setCartFlag(!cartFlag) }}>
+                                <button type='button' className={`flex gap-2 items-center mr-5 uppercase font-medium`} onClick={() => { setCartFlag(!cartFlag) }}>
                                     <BsCart4 />
                                     Your Cart
                                 </button>
